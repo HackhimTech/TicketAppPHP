@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="container" style="max-width:720px;margin:24px auto">
+  <h2>Sign up</h2>
+  <form id="signup-form" class="form" novalidate>
+    <div class="field">
+      <label for="name">Full name</label>
+      <input id="name" name="name" />
+    </div>
+    <div class="field">
+      <label for="username">Username</label>
+      <input id="username" name="username" />
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" />
+    </div>
+    <div style="display:flex;gap:8px;align-items:center; margin-top:2rem;">
+      <button class="btn primary" type="submit">Create account</button>
+      <a href="/?page=auth/login" class="helper">Have an account? Login</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

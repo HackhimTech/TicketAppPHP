@@ -1,0 +1,26 @@
+[
+    {
+        "id": "user_demo",
+        "username": "demo",
+        "password": "demo123",
+        "name": "Demo User"
+    },
+    {
+        "id": "user_690085791ca95",
+        "username": "jack@example.com",
+        "password": "Ayomiku",
+        "name": "Bello Hakeem"
+    },
+    {
+        "id": "user_6900f3300b28d",
+        "username": "hakeembello@gmail.com",
+        "password": "12345",
+        "name": "Hakeem Bello"
+    },
+    {
+        "id": "user_6900fccd7e441",
+        "username": "johnDoe@example.com",
+        "password": "Ayomiku@22",
+        "name": "Bello Hakeem"
+    }
+]

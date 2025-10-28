@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ app_name }}</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh; padding: 0 2rem;">
+  <header class="navbar container" role="banner">
+    <a class="brand" href="/?page=landing">
+      <div class="logo" aria-hidden="true">TA</div>
+      <div>
+        <strong>{{ app_name }}</strong><br />
+      </div>
+    </a>
+    {% if isAuthenticated %}
+    <nav class="nav-actions" aria-label="main">
+      <a class="helper" href="/?page=landing">Home</a>
+      <a class="helper" href="/?page=dashboard">Dashboard</a>
+      <a class="helper" href="/?page=tickets">Tickets</a>
+      <button id="btn-logout" class="btn ghost">Logout</button>
+    </nav>
+    {% else %}
+      <a class="btn primary" href="/?page=auth/login">Login</a>
+    {% endif %}
+  </header>
+
+  <main role="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer" style="margin: auto 0 0;">
+    <div class="container footer-inner">
+      <p>© {{ "now"|date("Y") }} {{ app_name }}</p>
+    </div>
+  </footer>
+
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>

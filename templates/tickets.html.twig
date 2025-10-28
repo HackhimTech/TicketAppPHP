@@ -1,0 +1,80 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="container">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h2>Tickets</h2>
+    <div>
+      <a class="btn primary" href="/?page=dashboard">Dashboard</a>
+      <a class="btn ghost" href="/?page=landing">Home</a>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Create ticket</h3>
+    <form id="create-ticket-form" class="form">
+      <div class="field">
+        <label>Title *</label>
+        <input name="title" />
+      </div>
+      <div class="field">
+        <label>Description</label>
+        <textarea name="description"></textarea>
+      </div>
+      <div class="field">
+        <label>Status *</label>
+        <select name="status">
+          <option value="open">Open</option>
+          <option value="in_progress">In Progress</option>
+          <option value="closed">Closed</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn primary" type="submit">Create Ticket</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h3>All tickets</h3>
+    <div id="tickets" class="card-grid" style="margin-top:12px"></div>
+  </div>
+
+  <div id="ticket-detail" style="margin-top:20px"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+  // protect
+  const session = localStorage.getItem('ticketapp_session');
+  if (!session) { window.location.href = '/?page=auth/login'; return; }
+
+  // wire create form
+  const form = document.getElementById('create-ticket-form');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const title = (fd.get('title') || '').toString().trim();
+    const description = (fd.get('description') || '').toString().trim();
+    const status = (fd.get('status') || '').toString();
+    if (!title) { alert('Title required'); return; }
+    const allowed = ['open','in_progress','closed'];
+    if (!allowed.includes(status)) { alert('Invalid status'); return; }
+    try {
+      await fetch('/api.php?action=tickets', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Session-Token': JSON.parse(session).session.token },
+        body: JSON.stringify({ title, description, status })
+      }).then(r=>r.json()).then(d=>{
+        if (d.ticket) {
+          alert('Ticket created');
+          form.reset();
+          location.reload();
+        } else {
+          alert(d.error || 'Failed to create ticket');
+        }
+      });
+    } catch (err) { alert('Failed to create ticket'); }
+  });
+});
+</script>
+{% endblock %}

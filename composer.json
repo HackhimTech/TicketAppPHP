@@ -1,0 +1,17 @@
+{
+  "name": "hackhim/ticketapp-php",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Cleve-keem",
+      "email": "belloharyourmidey@gmail.com"
+    }
+  ],
+  "require": {
+    "twig/twig": "^3.21"
+  }
+}

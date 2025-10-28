@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="container">
+  <section class="hero dashboard-hero" aria-labelledby="dashboard-title" style="padding:28px">
+    <div class="hero-inner" style="max-width:1100px">
+      <div>
+        <h1 id="dashboard-title">Your Dashboard</h1>
+        <p>Overview and quick actions.</p>
+        <div class="hero-cta">
+          <a href="/?page=tickets" class="btn primary">Manage Tickets</a>
+          <button class="btn ghost" id="btn-refresh">Refresh</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="card-grid stats-grid">
+    <div class="card"><div class="stat-title">Total Tickets</div><div id="stat-total" class="stat-value">—</div></div>
+    <div class="card"><div class="stat-title">Open</div><div id="stat-open" class="stat-value">—</div></div>
+    <div class="card"><div class="stat-title">Resolved</div><div id="stat-closed" class="stat-value">—</div></div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h3>Recent tickets</h3>
+    <div id="tickets" class="card-grid" style="margin-top:12px"></div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.querySelector('#btn-refresh')?.addEventListener('click', ()=> location.reload());
+  // load stats & tickets after DOM ready
+  (async ()=>{
+    try {
+      const session = localStorage.getItem('ticketapp_session');
+      if (!session) { window.location.href = '/?page=auth/login'; return; }
+      // use app.js helpers if loaded
+      if (typeof loadTicketsList === 'function') {
+        await loadTicketsList('#tickets');
+        // compute stats from rendered tickets by fetching tickets via API
+        const resp = await fetch('/api.php?action=tickets', { headers: { 'X-Session-Token': JSON.parse(session).session.token }});
+        const json = await resp.json();
+        if (resp.ok) {
+          const tickets = json.tickets || [];
+          document.getElementById('stat-total').textContent = tickets.length;
+          document.getElementById('stat-open').textContent = tickets.filter(t=>t.status==='open').length;
+          document.getElementById('stat-closed').textContent = tickets.filter(t=>t.status==='closed').length;
+        } else {
+          document.getElementById('stat-total').textContent = '—';
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  })();
+});
+</script>
+{% endblock %}

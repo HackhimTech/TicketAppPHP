@@ -1,0 +1,44 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="decorative-circle circle-1" aria-hidden="true"></div>
+  <div class="decorative-circle circle-2" aria-hidden="true"></div>
+
+  <div class="hero-inner container" style="max-width:1200px">
+    <div>
+      <h1 id="hero-title">TicketApp — Manage support tickets easily</h1>
+      <p>Build a robust ticket workflow with create, view, update, and delete functionality. Authentication simulated and protected routes enforced.</p>
+      <div class="hero-cta">
+        <a href="/?page=auth/login" class="btn primary">Login</a>
+        <a href="/?page=auth/signup" class="btn ghost">Get Started</a>
+      </div>
+    </div>
+
+    <div class="card" aria-hidden="false">
+      <h3 style="margin-top:0">Quick features</h3>
+      <p class="helper">Landing page includes wave hero, decorative circles and card-like layout — max width 1440px.</p>
+    </div>
+  </div>
+
+  <div style="position:absolute; left:0; right:0; bottom:0">
+    {% include 'hero-wave.svg' ignore missing %}
+  </div>
+</section>
+
+<div class="container">
+  <div class="card-grid">
+    <div class="card">
+      <h3>Manage tickets</h3>
+      <p class="helper">Create, view, edit and delete tickets with validation and visual feedback.</p>
+    </div>
+    <div class="card">
+      <h3>Protected views</h3>
+      <p class="helper">Dashboard and Tickets are protected — accessible after login.</p>
+    </div>
+    <div class="card">
+      <h3>Accessible & responsive</h3>
+      <p class="helper">Semantic HTML, visible focus states and responsive layout.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
